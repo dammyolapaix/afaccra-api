@@ -15,3 +15,4 @@ export {
   courseLevelPriceTypeEnum,
   coursePricesRelations,
 } from '../features/courses/prices/price.schema'
+export { default as books } from '../features/books/book.schema'
