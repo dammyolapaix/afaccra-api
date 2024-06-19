@@ -11,6 +11,7 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core'
 import courseSchedules from './schedules/schedule.schema'
+import coursePrices from './prices/price.schema'
 
 export const courseDeliveryModeEnum = pgEnum('course_delivery_mode', [
   'in-person',
@@ -55,6 +56,7 @@ const courses = pgTable('courses', {
 
 export const coursesRelations = relations(courses, ({ many }) => ({
   courseSchedules: many(courseSchedules),
+  coursePrices: many(coursePrices),
 }))
 
 export default courses

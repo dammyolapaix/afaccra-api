@@ -8,3 +8,9 @@ export {
   default as courseSchedules,
   courseSchedulesRelations,
 } from '../features/courses/schedules/schedule.schema'
+export {
+  default as coursePrices,
+  courseChildPriceTypeEnum,
+  courseLevelPriceTypeEnum,
+  coursePricesRelations,
+} from '../features/courses/prices/price.schema'
