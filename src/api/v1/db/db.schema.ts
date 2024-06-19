@@ -2,6 +2,7 @@ export {
   default as courses,
   courseDeliveryModeEnum,
   courseDurationPeriodEnum,
+  courseAudienceEnum,
   coursesRelations,
 } from '../features/courses/course.schema'
 export {

@@ -22,7 +22,10 @@ export const courseDurationPeriodEnum = pgEnum('course_duration_period', [
   'days',
   'weeks',
   'months',
+  'years',
 ])
+
+export const courseAudienceEnum = pgEnum('course_audience', ['adults', 'kids'])
 
 type Days = {
   SUNDAYS: 'sundays'
@@ -47,6 +50,7 @@ const courses = pgTable('courses', {
   endTime: time('end_time'),
   durationValue: integer('duration_value'),
   durationPeriod: courseDurationPeriodEnum('duration_period'),
+  audience: courseAudienceEnum('audience'),
   objective: text('objective'),
   curriculum: text('curriculum'),
   isPublished: boolean('is_published').default(false).notNull(),
