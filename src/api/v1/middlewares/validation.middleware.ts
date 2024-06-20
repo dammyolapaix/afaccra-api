@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { AnyZodObject, ZodError } from 'zod'
+import { z, AnyZodObject } from 'zod'
 import { convertQueryStringToObject } from '../utils'
 
 const validationMiddleware =
@@ -15,11 +15,20 @@ const validationMiddleware =
       })
       next()
     } catch (error) {
+      let localizedErrors: {}[] = []
+
+      if (error instanceof z.ZodError) {
+        localizedErrors = error.errors.map((err) => {
+          // Localize error message using i18next instance
+          return {
+            message: req.t(err.message),
+          }
+        })
+      }
+
       res.status(400).json({
         success: false,
-        error: {
-          message: (error as ZodError).issues[0].message,
-        },
+        errors: localizedErrors,
       })
     }
   }
