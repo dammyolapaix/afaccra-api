@@ -1,0 +1,15 @@
+{
+  "error": {
+    "resource_not_found": "Ressource introuvable",
+    "route_not_found": "Itinéraire introuvable",
+    "auth": {
+      "credentials_invalid": "Les informations d'identification invalides",
+      "user_exist": "L'utilisateur existe déjà, veuillez vous connecter",
+      "email_required": "Veuillez fournir votre email",
+      "email_invalid": "Veuillez fournir un email valide",
+      "password_required": "Veuillez fournir votre mot de passe",
+      "password_short": "Le mot de passe doit contenir au moins 8 caractères ou plus",
+      "password_weak": "Votre mot de passe est faible, assurez-vous qu'il contient au moins une majuscule et une lettre minuscule, un chiffre et un caractère spécial"
+    }
+  }
+}

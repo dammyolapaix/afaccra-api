@@ -1,0 +1,15 @@
+{
+  "error": {
+    "resource_not_found": "Resource not found",
+    "route_not_found": "Route not found",
+    "auth": {
+      "credentials_invalid": "Invalid Credentials",
+      "user_exist": "User already exist, please login",
+      "email_required": "Please provide your email",
+      "email_invalid": "Please provide a valid email",
+      "password_required": "Please provide your password",
+      "password_short": "Password must be at least 8 characters or more",
+      "password_weak": "Your password is weak, please make sure it contains at least a capital and a small letter, a number and a special character"
+    }
+  }
+}
