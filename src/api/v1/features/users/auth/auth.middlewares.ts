@@ -15,7 +15,9 @@ export const loginUserByEmailMiddleware = asyncHandler(
     const user = await getSingleUserByEmail(email)
 
     if (user === undefined)
-      return next(new ErrorResponse('Invalid Credentials', 400))
+      return next(
+        new ErrorResponse(req.t('error.auth.credentials_invalid'), 400)
+      )
 
     // Check if password is correct, by comparing the entered password and the user password
     const passwordMatched = await isPasswordMatched({
@@ -24,7 +26,9 @@ export const loginUserByEmailMiddleware = asyncHandler(
     })
 
     if (!passwordMatched)
-      return next(new ErrorResponse('Invalid Credentials', 400))
+      return next(
+        new ErrorResponse(req.t('error.auth.credentials_invalid'), 400)
+      )
 
     const token = getSignedJwtToken(user.id)
 
@@ -42,7 +46,7 @@ export const registerUserByEmailMiddleware = asyncHandler(
     const user = await getSingleUserByEmail(email)
 
     if (user)
-      return next(new ErrorResponse('User already exist, please login', 400))
+      return next(new ErrorResponse(req.t('error.auth.user_exist'), 400))
 
     req.body.password = await getHashedPassword(password)
     req.body.email = req.body.email.toLowerCase().trim()

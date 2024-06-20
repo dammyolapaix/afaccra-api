@@ -43,8 +43,6 @@ export const isPasswordStrong = (password: string): boolean => {
     hasSpecialChars &&
     has8CharactersOrMore
   )
-
-  //   return false
 }
 
 export const getHashedPassword = async (password: string): Promise<string> => {
