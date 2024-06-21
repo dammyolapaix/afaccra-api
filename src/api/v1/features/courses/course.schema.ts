@@ -12,6 +12,7 @@ import {
 } from 'drizzle-orm/pg-core'
 import courseSchedules from './schedules/schedule.schema'
 import coursePrices from './prices/price.schema'
+import users from '../users/user.schema'
 
 export const courseDeliveryModeEnum = pgEnum('course_delivery_mode', [
   'in-person',
@@ -27,14 +28,14 @@ export const courseDurationPeriodEnum = pgEnum('course_duration_period', [
 
 export const courseAudienceEnum = pgEnum('course_audience', ['adults', 'kids'])
 
-type Days = {
-  SUNDAYS: 'sundays'
-  MONDAYS: 'mondays'
-  TUESDAYS: 'tuesdays'
-  WEDNESDAYS: 'wednesdays'
-  THURSDAYS: 'thursdays'
-  FRIDAYS: 'fridays'
-  SATURDAYS: 'saturdays'
+enum Days {
+  SUNDAYS = 'sundays',
+  MONDAYS = 'mondays',
+  TUESDAYS = 'tuesdays',
+  WEDNESDAYS = 'wednesdays',
+  THURSDAYS = 'thursdays',
+  FRIDAYS = 'fridays',
+  SATURDAYS = 'saturdays',
 }
 
 const courses = pgTable('courses', {
@@ -53,12 +54,19 @@ const courses = pgTable('courses', {
   audience: courseAudienceEnum('audience'),
   objective: text('objective'),
   curriculum: text('curriculum'),
+  userId: uuid('user_id')
+    .references(() => users.id)
+    .notNull(),
   isPublished: boolean('is_published').default(false).notNull(),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow(),
 })
 
-export const coursesRelations = relations(courses, ({ many }) => ({
+export const coursesRelations = relations(courses, ({ one, many }) => ({
+  user: one(users, {
+    fields: [courses.userId],
+    references: [users.id],
+  }),
   courseSchedules: many(courseSchedules),
   coursePrices: many(coursePrices),
 }))

@@ -24,7 +24,8 @@
     "i18next": "^23.11.5",
     "i18next-http-middleware": "^3.6.0",
     "jsonwebtoken": "^9.0.2",
-    "postgres": "^3.4.4"
+    "postgres": "^3.4.4",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
