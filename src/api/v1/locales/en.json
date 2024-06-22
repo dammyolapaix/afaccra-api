@@ -9,7 +9,9 @@
       "email_invalid": "Please provide a valid email",
       "password_required": "Please provide your password",
       "password_short": "Password must be at least 8 characters or more",
-      "password_weak": "Your password is weak, please make sure it contains at least a capital and a small letter, a number and a special character"
+      "password_weak": "Your password is weak, please make sure it contains at least a capital and a small letter, a number and a special character",
+      "authentication_required": "Authentication Required: Please provide valid authentication credentials to access the requested resource.",
+      "unauthorized": "Access Denied: You lack the necessary permissions to access the requested resource."
     }
   }
 }

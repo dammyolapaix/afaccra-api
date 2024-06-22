@@ -1,3 +1,4 @@
+import { authenticatedMiddleware } from './authorization.middlewares'
 import { authByEmailValidation } from '../user.validations'
 import {
   loginUserByEmailMiddleware,
@@ -14,6 +15,7 @@ import {
 } from './auth.utils'
 import authRoutes from './auth.routes'
 
+export { authenticatedMiddleware }
 export { authByEmailValidation }
 export {
   loginUserByEmailMiddleware,
