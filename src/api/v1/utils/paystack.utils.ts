@@ -24,6 +24,7 @@ type VerifyPaystackTransactionSuccessResType = {
   status: boolean
   message: 'Verification successful'
   data: {
+    id: number
     status: 'success' | 'abandoned'
     amount: number
     paid_at: string | null
