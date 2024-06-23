@@ -4,14 +4,30 @@
     "route_not_found": "Route not found",
     "auth": {
       "credentials_invalid": "Invalid Credentials",
-      "user_exist": "User already exist, please login",
+      "user_exists": "User already exists, please log in",
       "email_required": "Please provide your email",
       "email_invalid": "Please provide a valid email",
       "password_required": "Please provide your password",
       "password_short": "Password must be at least 8 characters or more",
-      "password_weak": "Your password is weak, please make sure it contains at least a capital and a small letter, a number and a special character",
+      "password_weak": "Your password is weak, please make sure it contains at least a capital and a small letter, a number, and a special character",
       "authentication_required": "Authentication Required: Please provide valid authentication credentials to access the requested resource.",
       "unauthorized": "Access Denied: You lack the necessary permissions to access the requested resource."
+    },
+    "course": {
+      "title_required": "Course title required: Please provide either the French or English title of the course",
+      "titleEn_exists": "The English title of this course already exists",
+      "slugEn_exists": "The English slug of this course already exists",
+      "titleEn_3_min": "The English title must be at 3 characters",
+      "titleFr_exists": "The French title of this course already exists",
+      "slugFr_exists": "The French slug of this course already exists",
+      "titleFr_3_min": "The French title must be at 3 characters",
+      "startTime_invalid": "The course start time must be a valid time",
+      "endTime_invalid": "The course end time must be a valid time",
+      "not_found": "Course not found",
+      "price": {
+        "required": "The course price amount is required",
+        "not_found": "Course price not found"
+      }
     }
   }
 }

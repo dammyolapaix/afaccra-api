@@ -4,14 +4,30 @@
     "route_not_found": "Itinéraire introuvable",
     "auth": {
       "credentials_invalid": "Les informations d'identification invalides",
-      "user_exist": "L'utilisateur existe déjà, veuillez vous connecter",
+      "user_exists": "L'utilisateur existe déjà, veuillez vous connecter",
       "email_required": "Veuillez fournir votre email",
       "email_invalid": "Veuillez fournir un email valide",
       "password_required": "Veuillez fournir votre mot de passe",
       "password_short": "Le mot de passe doit contenir au moins 8 caractères ou plus",
       "password_weak": "Votre mot de passe est faible, assurez-vous qu'il contient au moins une majuscule et une lettre minuscule, un chiffre et un caractère spécial.",
-      "authentication_required": "Authentification requise: veuillez fournir des informations d'authentification valides pour accéder à la ressource demandée.",
-      "unauthorized": "Accès refusé: vous ne disposez pas des autorisations nécessaires pour accéder à la ressource demandée."
+      "authentication_required": "Authentification requise : veuillez fournir des informations d'authentification valides pour accéder à la ressource demandée.",
+      "unauthorized": "Accès refusé : vous ne disposez pas des autorisations nécessaires pour accéder à la ressource demandée."
+    },
+    "course": {
+      "title_required": "Titre du cours requis : Veuillez fournir le titre du cours en français ou en anglais.",
+      "titleEn_exists": "Le titre anglais de ce cours existe déjà",
+      "slugEn_exists": "Le slug anglais de ce cours existe déjà",
+      "titleEn_3_min": "Le titre anglais doit être à 3 caractères",
+      "titleFr_exists": "Le titre français de ce cours existe déjà",
+      "slugFr_exists": "Le slug français de ce cours existe déjà",
+      "titleFr_3_min": "Le titre français doit être à 3 caractères",
+      "startTime_invalid": "L'heure de début du cours doit être une heure valide",
+      "endTime_invalid": "L'heure de fin du cours doit être une heure valide",
+      "not_found": "Cours introuvable",
+      "price": {
+        "required": "Le montant du prix du cours est requis",
+        "not_found": "Prix ​​du cours introuvable"
+      }
     }
   }
 }
