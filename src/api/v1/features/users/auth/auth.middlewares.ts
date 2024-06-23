@@ -46,7 +46,7 @@ export const registerUserByEmailMiddleware = asyncHandler(
     const user = await getSingleUserByEmail(email)
 
     if (user)
-      return next(new ErrorResponse(req.t('error.auth.user_exist'), 400))
+      return next(new ErrorResponse(req.t('error.auth.user_exists'), 400))
 
     req.body.password = await getHashedPassword(password)
     req.body.email = req.body.email.toLowerCase().trim()

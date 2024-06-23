@@ -19,16 +19,13 @@ export const authenticatedMiddleware = asyncHandler(
     }
 
     // Make sure token exist
-    if (!token)
+    if (!token || token === null || token === '' || token === 'null')
       return next(
         new ErrorResponse(req.t('error.auth.authentication_required'), 401)
       )
 
     // Verify user by jwt
-    const userId = getVerifiedJwtTokenUserId({
-      secret: process.env.JWT_SECRET!,
-      token,
-    })
+    const userId = getVerifiedJwtTokenUserId({ token })
 
     const user = await getSingleUserById(userId)
 
@@ -38,7 +35,6 @@ export const authenticatedMiddleware = asyncHandler(
         new ErrorResponse(req.t('error.auth.authentication_required'), 401)
       )
 
-    // @ts-ignore
     req.user = user
 
     next()

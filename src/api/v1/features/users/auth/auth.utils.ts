@@ -2,18 +2,16 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 export const getSignedJwtToken = (userId: string) =>
-  jwt.sign({ userId }, process.env.JWT_SECRET as string, {
+  jwt.sign({ userId }, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   })
 
 export const getVerifiedJwtTokenUserId = ({
-  secret,
   token,
 }: {
   token: string
-  secret: string
 }): string => {
-  const jwtPayload = jwt.verify(token, secret)
+  const jwtPayload = jwt.verify(token, process.env.JWT_SECRET!)
 
   // @ts-ignore
   return jwtPayload.userId
