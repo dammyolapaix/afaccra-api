@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { numeric, pgEnum, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { integer, pgEnum, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
 import courses from '../course.schema'
 
 export const courseLevelPriceTypeEnum = pgEnum('course_level_price', [
@@ -21,10 +21,7 @@ const coursePrices = pgTable('course_prices', {
     .notNull(),
   level: courseLevelPriceTypeEnum('level'),
   child: courseChildPriceTypeEnum('child'),
-  price: numeric('price', {
-    precision: 100,
-    scale: 2,
-  }).notNull(),
+  amount: integer('amount').notNull(),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow(),
 })
