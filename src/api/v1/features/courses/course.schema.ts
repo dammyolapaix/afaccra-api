@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm'
 import {
   boolean,
+  date,
   integer,
   pgEnum,
   pgTable,
@@ -46,6 +47,8 @@ const courses = pgTable('courses', {
   slugEn: varchar('slug_en', { length: 256 }).unique(),
   slugFr: varchar('slug_fr', { length: 256 }).unique(),
   deliveryMode: courseDeliveryModeEnum('delivery_mode'),
+  startDate: date('start_date'),
+  endDate: date('end_date'),
   days: text('days').array().$type<Array<Days>>(),
   startTime: time('start_time'),
   endTime: time('end_time'),
@@ -67,8 +70,8 @@ export const coursesRelations = relations(courses, ({ one, many }) => ({
     fields: [courses.userId],
     references: [users.id],
   }),
-  courseSchedules: many(courseSchedules),
-  coursePrices: many(coursePrices),
+  schedules: many(courseSchedules),
+  prices: many(coursePrices),
 }))
 
 export default courses

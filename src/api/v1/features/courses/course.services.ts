@@ -12,10 +12,7 @@ export const getSingleCourseByQuery = async ({
   id,
   slugEn,
   slugFr,
-  identifier,
-}: Partial<
-  Pick<CourseType, 'id' | 'slugEn' | 'slugFr'> & { identifier: string }
->) =>
+}: Partial<Pick<CourseType, 'id' | 'slugEn' | 'slugFr'>>) =>
   await db.query.courses.findFirst({
     where: or(
       slugEn
@@ -24,29 +21,25 @@ export const getSingleCourseByQuery = async ({
         ? eq(courses.slugFr, slugFr)
         : id
         ? eq(courses.id, id)
-        : undefined,
-      identifier
-        ? or(
-            eq(courses.titleEn, identifier),
-            eq(courses.titleFr, identifier),
-            eq(courses.slugEn, identifier),
-            eq(courses.slugFr, identifier)
-          )
         : undefined
     ),
     with: {
-      user: true,
-      coursePrices: true,
-      courseSchedules: true,
+      user: {
+        columns: { password: false },
+      },
+      prices: true,
+      schedules: true,
     },
   })
 
 export const getCourses = async () =>
   await db.query.courses.findMany({
     with: {
-      user: true,
-      coursePrices: true,
-      courseSchedules: true,
+      user: {
+        columns: { password: false },
+      },
+      prices: true,
+      schedules: true,
     },
   })
 
