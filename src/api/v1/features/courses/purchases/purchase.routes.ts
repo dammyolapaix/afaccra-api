@@ -5,7 +5,7 @@ import {
   coursePurchaseMiddleware,
   purchaseCourseHandler,
   verifyCoursePurchaseHandler,
-  verifyCoursePurchaseMiddleware,
+  singleCoursePurchaseMiddleware,
 } from '.'
 
 const router = express.Router({ mergeParams: true })
@@ -20,7 +20,7 @@ router.route('/').post(
 router.route('/:purchaseId/verify').get(
   authenticatedMiddleware,
   // validationMiddleware(updateCoursePriceValidation),
-  verifyCoursePurchaseMiddleware,
+  singleCoursePurchaseMiddleware,
   verifyCoursePurchaseHandler
 )
 

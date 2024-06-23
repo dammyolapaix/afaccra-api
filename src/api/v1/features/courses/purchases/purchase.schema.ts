@@ -23,7 +23,7 @@ const coursePurchases = pgTable('course_purchases', {
     .notNull(),
   paymentStatus: purchasePaymentStatusEnum('payment_status').default('pending'),
   paidAt: timestamp('paid_at', { mode: 'string' }),
-  paystackTransactionId: bigint('paystack_transaction_id', { mode: 'bigint' }),
+  paystackTransactionId: bigint('paystack_transaction_id', { mode: 'number' }),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow(),
 })

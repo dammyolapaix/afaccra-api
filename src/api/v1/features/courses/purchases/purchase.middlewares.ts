@@ -1,6 +1,10 @@
 import { NextFunction, Request } from 'express'
 import { asyncHandler } from '../../../middlewares'
-import { CoursePurchaseRequestType, getSingleCoursePurchaseById } from '.'
+import {
+  CoursePurchaseRequestType,
+  CoursePurchaseType,
+  getSingleCoursePurchaseById,
+} from '.'
 import { ErrorResponse } from '../../../utils'
 import { getSingleCoursePriceById } from '../prices'
 
@@ -23,9 +27,11 @@ export const coursePurchaseMiddleware = asyncHandler(
   }
 )
 
-export const verifyCoursePurchaseMiddleware = asyncHandler(
+export const singleCoursePurchaseMiddleware = asyncHandler(
   async (
-    req: Request<{ purchaseId: string }, {}, {}, {}>,
+    req: Request<{ purchaseId: string }, {}, {}, {}> & {
+      purchase?: CoursePurchaseType
+    },
     res: Response,
     next: NextFunction
   ) => {
@@ -37,6 +43,8 @@ export const verifyCoursePurchaseMiddleware = asyncHandler(
       return next(
         new ErrorResponse(req.t('error.course.purchase.not_found'), 404)
       )
+
+    req.purchase = purchase
 
     next()
   }
