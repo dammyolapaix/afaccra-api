@@ -11,10 +11,12 @@ import { checkDuplicateCourseMiddleware } from '.'
 import { authenticatedMiddleware } from '../users/auth'
 import { validationMiddleware } from '../../middlewares'
 import { coursePriceRoutes } from './prices'
+import { courseScheduleRoutes } from './schedules'
 
 const router = express.Router()
 
 router.use('/:courseId/prices', coursePriceRoutes)
+router.use('/:courseId/schedules', courseScheduleRoutes)
 
 router
   .route('/')
