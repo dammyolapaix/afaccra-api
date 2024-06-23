@@ -1,7 +1,9 @@
 import { UserType } from '../../features/users'
 
-declare module 'express-serve-static-core' {
-  export interface Request {
-    user?: UserType
+declare global {
+  namespace Express {
+    interface Request {
+      user?: UserType
+    }
   }
 }
