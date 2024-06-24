@@ -9,8 +9,11 @@ import {
   updateClassByIdHandler,
 } from '.'
 import { validationMiddleware } from '../../middlewares'
+import { topicRoutes } from './topics'
 
 const router = express.Router()
+
+router.use('/:classId/topics', topicRoutes)
 
 router
   .route('/')
