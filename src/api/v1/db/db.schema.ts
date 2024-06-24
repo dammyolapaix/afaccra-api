@@ -1,3 +1,6 @@
+/**
+ * Courses
+ */
 export {
   default as courses,
   courseDeliveryModeEnum,
@@ -26,3 +29,36 @@ export {
   default as courseEnrollments,
   courseEnrollmentsRelations,
 } from '../features/courses/enrollments/enrollment.schema'
+
+/**
+ * Classes
+ */
+export {
+  default as classes,
+  classesRelations,
+} from '../features/classes/class.schema'
+export {
+  default as classTopics,
+  classTopicsRelations,
+} from '../features/classes/topics/topic.schema'
+export {
+  default as classMaterials,
+  classMaterialsRelations,
+} from '../features/classes/materials/material.schema'
+export {
+  default as classAttachments,
+  classAttachmentsRelations,
+} from '../features/classes/attachments/attachment.schema'
+export {
+  default as classExercises,
+  classExercisesRelations,
+} from '../features/classes/exercises/exercise.schema'
+export {
+  default as exerciseQuestions,
+  exerciseQuestionTypeEnum,
+  exerciseQuestionsRelations,
+} from '../features/classes/exercises/questions/question.schema'
+export {
+  default as exerciseQuestionOptions,
+  exerciseQuestionOptionsRelations,
+} from '../features/classes/exercises/options/option.schema'
