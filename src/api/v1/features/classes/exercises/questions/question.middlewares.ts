@@ -21,16 +21,29 @@ export const createQuestionMiddleware = asyncHandler(
 
 export const singleQuestionMiddleware = asyncHandler(
   async (req: SingleQuestionRequestType, res: Response, next: NextFunction) => {
-    const { questionId: id } = req.params
+    if (req.params.questionId) {
+      const question = await getSingleQuestionById({
+        id: req.params.questionId,
+      })
 
-    const question = await getSingleQuestionById({ id })
+      if (question === undefined)
+        return next(
+          new ErrorResponse(req.t('error.class.question.not_found'), 404)
+        )
 
-    if (question === undefined)
-      return next(
-        new ErrorResponse(req.t('error.class.question.not_found'), 404)
-      )
+      req.question = question
+    }
 
-    req.question = question
+    if (req.body.questionId) {
+      const question = await getSingleQuestionById({
+        id: req.body.questionId,
+      })
+
+      if (question === undefined)
+        return next(
+          new ErrorResponse(req.t('error.class.question.not_found'), 404)
+        )
+    }
 
     next()
   }
