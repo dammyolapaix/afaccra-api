@@ -18,7 +18,7 @@ export const exerciseQuestionTypeEnum = pgEnum('exercise_question_type', [
 
 const exerciseQuestions = pgTable('exercise_questions', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
-  title: varchar('title', { length: 256 }),
+  title: varchar('title', { length: 256 }).notNull(),
   points: integer('points'),
   exerciseId: uuid('exercise_id')
     .references(() => classExercises.id)

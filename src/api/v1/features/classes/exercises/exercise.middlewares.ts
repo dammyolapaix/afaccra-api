@@ -33,16 +33,31 @@ export const createExerciseMiddleware = asyncHandler(
 
 export const singleExerciseMiddleware = asyncHandler(
   async (req: SingleExerciseRequestType, res: Response, next: NextFunction) => {
-    const { exerciseId: id } = req.params
+    if (req.params.exerciseId) {
+      const exercise = await getSingleExerciseById({
+        id: req.params.exerciseId,
+      })
 
-    const exercise = await getSingleExerciseById({ id })
+      if (exercise === undefined)
+        return next(
+          new ErrorResponse(req.t('error.class.exercise.not_found'), 404)
+        )
 
-    if (exercise === undefined)
-      return next(
-        new ErrorResponse(req.t('error.class.exercise.not_found'), 404)
-      )
+      req.exercise = exercise
+    }
 
-    req.exercise = exercise
+    if (req.body.exerciseId) {
+      const exercise = await getSingleExerciseById({
+        id: req.body.exerciseId,
+      })
+
+      if (exercise === undefined)
+        return next(
+          new ErrorResponse(req.t('error.class.exercise.not_found'), 404)
+        )
+
+      req.exercise = exercise
+    }
 
     next()
   }

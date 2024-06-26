@@ -5,6 +5,7 @@ import { classRoutes } from '../features/classes'
 import { topicRoutes } from '../features/classes/topics'
 import { materialRoutes } from '../features/classes/materials'
 import { exerciseRoutes } from '../features/classes/exercises'
+import { questionRoutes } from '../features/classes/exercises/questions'
 
 const router = express.Router()
 
@@ -14,5 +15,6 @@ router.use('/api/v1/classes', authenticatedMiddleware, classRoutes)
 router.use('/api/v1/topics', authenticatedMiddleware, topicRoutes)
 router.use('/api/v1/materials', authenticatedMiddleware, materialRoutes)
 router.use('/api/v1/exercises', authenticatedMiddleware, exerciseRoutes)
+router.use('/api/v1/questions', authenticatedMiddleware, questionRoutes)
 
 export default router

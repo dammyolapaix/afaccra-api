@@ -26,24 +26,33 @@ export const createClassMiddleware = asyncHandler(
 export const singleClassMiddleware = asyncHandler(
   async (
     req: Request<
-      { classId: ClassType['id'] },
+      { classId?: ClassType['id'] },
       {},
       { classId?: ClassType['id'] },
       {}
     > & {
-      class: ClassType
+      class?: ClassType
     },
     res: Response,
     next: NextFunction
   ) => {
-    const id = req.body.classId ? req.body.classId : req.params.classId
+    if (req.params.classId) {
+      const classExists = await getSingleClassById({ id: req.params.classId })
 
-    const classExists = await getSingleClassById({ id })
+      if (classExists === undefined)
+        return next(new ErrorResponse(req.t('error.class.not_found'), 404))
 
-    if (classExists === undefined)
-      return next(new ErrorResponse(req.t('error.class.not_found'), 404))
+      req.class = classExists
+    }
 
-    req.class = classExists
+    if (req.body.classId) {
+      const classExists = await getSingleClassById({ id: req.body.classId })
+
+      if (classExists === undefined)
+        return next(new ErrorResponse(req.t('error.class.not_found'), 404))
+
+      req.class = classExists
+    }
 
     next()
   }
