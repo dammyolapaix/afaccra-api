@@ -7,6 +7,7 @@ import { materialRoutes } from '../features/classes/materials'
 import { exerciseRoutes } from '../features/classes/exercises'
 import { questionRoutes } from '../features/classes/exercises/questions'
 import { optionRoutes } from '../features/classes/exercises/options'
+import { attachmentRoutes } from '../features/classes/attachments'
 
 const router = express.Router()
 
@@ -18,5 +19,6 @@ router.use('/api/v1/materials', authenticatedMiddleware, materialRoutes)
 router.use('/api/v1/exercises', authenticatedMiddleware, exerciseRoutes)
 router.use('/api/v1/questions', authenticatedMiddleware, questionRoutes)
 router.use('/api/v1/options', authenticatedMiddleware, optionRoutes)
+router.use('/api/v1/attachments', authenticatedMiddleware, attachmentRoutes)
 
 export default router

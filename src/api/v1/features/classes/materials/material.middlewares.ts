@@ -33,16 +33,29 @@ export const createMaterialMiddleware = asyncHandler(
 
 export const singleMaterialMiddleware = asyncHandler(
   async (req: SingleMaterialRequestType, res: Response, next: NextFunction) => {
-    const { materialId: id } = req.params
+    if (req.params.materialId) {
+      const material = await getSingleMaterialById({
+        id: req.params.materialId,
+      })
 
-    const material = await getSingleMaterialById({ id })
+      if (material === undefined)
+        return next(
+          new ErrorResponse(req.t('error.class.material.not_found'), 404)
+        )
 
-    if (material === undefined)
-      return next(
-        new ErrorResponse(req.t('error.class.material.not_found'), 404)
-      )
+      req.material = material
+    }
 
-    req.material = material
+    if (req.body.materialId) {
+      const material = await getSingleMaterialById({ id: req.body.materialId })
+
+      if (material === undefined)
+        return next(
+          new ErrorResponse(req.t('error.class.material.not_found'), 404)
+        )
+
+      req.material = material
+    }
 
     next()
   }

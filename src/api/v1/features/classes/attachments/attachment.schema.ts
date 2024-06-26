@@ -7,7 +7,6 @@ import classExercises from '../exercises/exercise.schema'
 const classAttachments = pgTable('class_attachments', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
   link: varchar('link', { length: 256 }),
-  ytLink: varchar('yt_link', { length: 256 }),
   awsS3Key: varchar('aws_s3_key', { length: 256 }),
   awsS3PresignedUrl: varchar('aws_s3_presigned_url', { length: 256 }),
   awsS3PresignedUrlExpiresAt: timestamp('aws_s3_presigned_url_expires_at', {
