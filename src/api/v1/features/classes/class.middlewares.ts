@@ -25,13 +25,18 @@ export const createClassMiddleware = asyncHandler(
 
 export const singleClassMiddleware = asyncHandler(
   async (
-    req: Request<{ classId: ClassType['id'] }, {}, {}, {}> & {
+    req: Request<
+      { classId: ClassType['id'] },
+      {},
+      { classId?: ClassType['id'] },
+      {}
+    > & {
       class: ClassType
     },
     res: Response,
     next: NextFunction
   ) => {
-    const { classId: id } = req.params
+    const id = req.body.classId ? req.body.classId : req.params.classId
 
     const classExists = await getSingleClassById({ id })
 
