@@ -1,9 +1,7 @@
-import { createInsertSchema } from 'drizzle-zod'
-import users from './user.schema'
 import { object, z } from 'zod'
 import { isPasswordStrong } from './auth'
 
-const insertUserSchema = createInsertSchema(users, {
+export const insertUserSchema = z.object({
   email: z
     .string({
       required_error: 'error.auth.email_required',

@@ -19,7 +19,11 @@ export {
   coursePricesRelations,
 } from '../features/courses/prices/price.schema'
 export { default as books } from '../features/books/book.schema'
-export { default as users, usersRelations } from '../features/users/user.schema'
+export {
+  default as users,
+  userAuthProviderEnum,
+  usersRelations,
+} from '../features/users/user.schema'
 export {
   default as coursePurchases,
   coursePurchasesRelations,

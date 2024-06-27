@@ -1,9 +1,15 @@
 import { UserType } from '../../features/users'
 
+// declare global {
+//   namespace Express {
+//     interface Request {
+//       user?: UserType
+//     }
+//   }
+// }
+
 declare global {
   namespace Express {
-    interface Request {
-      user?: UserType
-    }
+    interface User extends UserType {}
   }
 }

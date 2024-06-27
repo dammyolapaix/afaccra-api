@@ -1,8 +1,10 @@
 import express from 'express'
-import { validationMiddleware } from '../../../middlewares'
+import passport from 'passport'
+import validationMiddleware from '../../../middlewares/validation.middleware'
 import {
   authByEmailValidation,
   loginUserByEmailMiddleware,
+  oAuthRedirectHandler,
   registerUserByEmailHandler,
   registerUserByEmailMiddleware,
   setCookieMiddleware,
@@ -26,5 +28,15 @@ router
     loginUserByEmailMiddleware,
     setCookieMiddleware
   )
+
+router.route('/google').get(
+  passport.authenticate('google', {
+    scope: ['email', 'profile'],
+  })
+)
+
+router
+  .route('/google/redirect')
+  .get(passport.authenticate('google'), oAuthRedirectHandler)
 
 export default router

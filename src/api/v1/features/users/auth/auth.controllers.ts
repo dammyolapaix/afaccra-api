@@ -14,3 +14,28 @@ export const registerUserByEmailHandler = asyncHandler(
     next()
   }
 )
+
+const { FRONTEND_URL, COOKIE_EXPIRES, NODE_ENV } = process.env
+
+// @desc        oAuth Redirect
+// @route       POST /api/v1/auth/{provider}/redirect
+// @access      Public
+export const oAuthRedirectHandler = asyncHandler(
+  async (req: AuthByEmailRequestType, res: Response, next: NextFunction) => {
+    if (!req.user) res.redirect(`${FRONTEND_URL!}/auth/sso?status=failed`)
+
+    const token = getSignedJwtToken(req.user!.id)
+
+    res
+      .status(200)
+      .cookie('token', token, {
+        expires: new Date(
+          Date.now() + Number(COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true,
+        secure: NODE_ENV === 'production',
+        sameSite: NODE_ENV === 'production' ? 'none' : undefined,
+      })
+      .redirect(`${FRONTEND_URL!}/auth/sso?status=success`)
+  }
+)
