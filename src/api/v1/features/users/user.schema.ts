@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm'
 import { pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import coursePurchases from '../courses/purchases/purchase.schema'
+import usersToRoles from './roles/user.role.schema'
 
 export const userAuthProviderEnum = pgEnum('user_auth_provider', [
   'email',
@@ -20,6 +21,7 @@ const users = pgTable('users', {
 
 export const usersRelations = relations(users, ({ many }) => ({
   coursePurchases: many(coursePurchases),
+  roles: many(usersToRoles),
 }))
 
 export default users

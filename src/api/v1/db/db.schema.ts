@@ -1,4 +1,21 @@
 /**
+ * Users and Roles
+ */
+export {
+  default as users,
+  userAuthProviderEnum,
+  usersRelations,
+} from '../features/users/user.schema'
+export {
+  default as roles,
+  rolesRelations,
+} from '../features/users/roles/role.schema'
+export {
+  default as usersToRoles,
+  usersToRolesRelations,
+} from '../features/users/roles/user.role.schema'
+
+/**
  * Courses
  */
 export {
@@ -20,11 +37,6 @@ export {
   coursePricesRelations,
 } from '../features/courses/prices/price.schema'
 export { default as books } from '../features/books/book.schema'
-export {
-  default as users,
-  userAuthProviderEnum,
-  usersRelations,
-} from '../features/users/user.schema'
 export {
   default as coursePurchases,
   coursePurchasesRelations,
