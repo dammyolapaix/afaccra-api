@@ -29,6 +29,11 @@ export const courseDurationPeriodEnum = pgEnum('course_duration_period', [
 
 export const courseAudienceEnum = pgEnum('course_audience', ['adults', 'kids'])
 
+export const courseLanguageEnum = pgEnum('course_language', [
+  'english',
+  'french',
+])
+
 enum Days {
   SUNDAYS = 'sundays',
   MONDAYS = 'mondays',
@@ -41,7 +46,6 @@ enum Days {
 
 const courses = pgTable('courses', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
-  image: varchar('image'),
   titleEn: varchar('title_en', { length: 256 }).unique(),
   titleFr: varchar('title_fr', { length: 256 }).unique(),
   slugEn: varchar('slug_en', { length: 256 }).unique(),
@@ -55,6 +59,7 @@ const courses = pgTable('courses', {
   durationValue: integer('duration_value'),
   durationPeriod: courseDurationPeriodEnum('duration_period'),
   audience: courseAudienceEnum('audience'),
+  language: courseLanguageEnum('language'),
   objective: text('objective'),
   curriculum: text('curriculum'),
   userId: uuid('user_id')

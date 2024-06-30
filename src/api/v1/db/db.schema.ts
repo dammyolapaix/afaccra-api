@@ -6,6 +6,7 @@ export {
   courseDeliveryModeEnum,
   courseDurationPeriodEnum,
   courseAudienceEnum,
+  courseLanguageEnum,
   coursesRelations,
 } from '../features/courses/course.schema'
 export {
