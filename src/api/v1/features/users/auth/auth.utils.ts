@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { UserType } from '..'
+import { RolesType } from '../roles'
 
 export const getSignedJwtToken = (userId: string) =>
   jwt.sign({ userId }, process.env.JWT_SECRET!, {
@@ -46,4 +48,15 @@ export const isPasswordStrong = (password: string): boolean => {
 export const getHashedPassword = async (password: string): Promise<string> => {
   const salt = await bcrypt.genSalt(10)
   return await bcrypt.hash(password, salt)
+}
+
+export const userHasRole = ({
+  user,
+  rolesToCheck,
+}: {
+  user: UserType
+  rolesToCheck: RolesType[]
+}): boolean => {
+  const userRoles = user.roles.map((role) => role.role.name)
+  return rolesToCheck.some((role) => userRoles.includes(role))
 }

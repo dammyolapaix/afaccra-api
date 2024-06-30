@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { asyncHandler } from '../../../middlewares'
 import { ErrorResponse } from '../../../utils'
-import { getVerifiedJwtTokenUserId } from '.'
+import { getVerifiedJwtTokenUserId, userHasRole } from '.'
 import { getSingleUserById } from '..'
 
 export const authenticatedMiddleware = asyncHandler(
@@ -36,6 +36,70 @@ export const authenticatedMiddleware = asyncHandler(
       )
 
     req.user = user
+
+    next()
+  }
+)
+
+export const adminOnlyRouteMiddleware = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user!
+
+    const userHasPermission = userHasRole({
+      user,
+      rolesToCheck: ['admin'],
+    })
+
+    if (!userHasPermission)
+      return next(new ErrorResponse(req.t('error.auth.unauthorized'), 403))
+
+    next()
+  }
+)
+
+export const staffOnlyOrAboveRouteMiddleware = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user!
+
+    const userHasPermission = userHasRole({
+      user,
+      rolesToCheck: ['admin', 'staff'],
+    })
+
+    if (!userHasPermission)
+      return next(new ErrorResponse(req.t('error.auth.unauthorized'), 403))
+
+    next()
+  }
+)
+
+export const instructorOnlyOrAboveRouteMiddleware = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user!
+
+    const userHasPermission = userHasRole({
+      user,
+      rolesToCheck: ['admin', 'staff', 'instructor'],
+    })
+
+    if (!userHasPermission)
+      return next(new ErrorResponse(req.t('error.auth.unauthorized'), 403))
+
+    next()
+  }
+)
+
+export const studentOnlyOrAboveRouteMiddleware = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user!
+
+    const userHasPermission = userHasRole({
+      user,
+      rolesToCheck: ['admin', 'staff', 'student'],
+    })
+
+    if (!userHasPermission)
+      return next(new ErrorResponse(req.t('error.auth.unauthorized'), 403))
 
     next()
   }

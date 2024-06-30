@@ -1,4 +1,10 @@
-import { authenticatedMiddleware } from './authorization.middlewares'
+import {
+  authenticatedMiddleware,
+  adminOnlyRouteMiddleware,
+  instructorOnlyOrAboveRouteMiddleware,
+  staffOnlyOrAboveRouteMiddleware,
+  studentOnlyOrAboveRouteMiddleware,
+} from './authorization.middlewares'
 import { authByEmailValidation } from '../user.validations'
 import { googleStrategy } from './auth.google.strategy'
 import {
@@ -7,6 +13,7 @@ import {
   setCookieMiddleware,
 } from './auth.middlewares'
 import {
+  getAuthUserEmailHandler,
   oAuthRedirectHandler,
   registerUserByEmailHandler,
 } from './auth.controllers'
@@ -16,10 +23,17 @@ import {
   getSignedJwtToken,
   isPasswordStrong,
   getHashedPassword,
+  userHasRole,
 } from './auth.utils'
 import authRoutes from './auth.routes'
 
-export { authenticatedMiddleware }
+export {
+  authenticatedMiddleware,
+  adminOnlyRouteMiddleware,
+  instructorOnlyOrAboveRouteMiddleware,
+  staffOnlyOrAboveRouteMiddleware,
+  studentOnlyOrAboveRouteMiddleware,
+}
 export { authByEmailValidation }
 export { googleStrategy }
 export {
@@ -33,6 +47,11 @@ export {
   getSignedJwtToken,
   isPasswordStrong,
   getHashedPassword,
+  userHasRole,
 }
-export { oAuthRedirectHandler, registerUserByEmailHandler }
+export {
+  getAuthUserEmailHandler,
+  oAuthRedirectHandler,
+  registerUserByEmailHandler,
+}
 export { authRoutes }
