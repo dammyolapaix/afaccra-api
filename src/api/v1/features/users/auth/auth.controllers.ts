@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { asyncHandler } from '../../../middlewares'
 import { AuthByEmailRequestType, createUser } from '..'
 import { getSignedJwtToken } from '.'
@@ -38,4 +38,12 @@ export const oAuthRedirectHandler = asyncHandler(
       })
       .redirect(`${FRONTEND_URL!}/auth/sso?status=success`)
   }
+)
+
+// @desc        Get Auth user
+// @route       GET /api/v1/auth/user
+// @access      Private
+export const getAuthUserEmailHandler = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) =>
+    res.status(200).json({ user: req.user! })
 )

@@ -1,10 +1,20 @@
-import { and, eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { db } from '../../db'
 import users from './user.schema'
-import { NewUserType, RegisterUserType } from './user.types'
+import { NewUserType } from './user.types'
 
 export const getSingleUserById = async (id: string) =>
-  await db.query.users.findFirst({ where: eq(users.id, id) })
+  await db.query.users.findFirst({
+    where: eq(users.id, id),
+    columns: { password: false },
+    with: {
+      roles: {
+        with: {
+          role: true,
+        },
+      },
+    },
+  })
 
 export const getSingleUserByEmail = async (email: string) =>
   await db.query.users.findFirst({ where: eq(users.email, email) })

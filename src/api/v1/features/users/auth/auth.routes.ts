@@ -3,6 +3,8 @@ import passport from 'passport'
 import validationMiddleware from '../../../middlewares/validation.middleware'
 import {
   authByEmailValidation,
+  authenticatedMiddleware,
+  getAuthUserEmailHandler,
   loginUserByEmailMiddleware,
   oAuthRedirectHandler,
   registerUserByEmailHandler,
@@ -28,6 +30,8 @@ router
     loginUserByEmailMiddleware,
     setCookieMiddleware
   )
+
+router.route('/user').get(authenticatedMiddleware, getAuthUserEmailHandler)
 
 router.route('/google').get(
   passport.authenticate('google', {
