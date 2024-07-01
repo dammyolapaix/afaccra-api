@@ -6,9 +6,29 @@ import { errorHandler, notFound } from './api/v1/middlewares'
 import i18next from 'i18next'
 import i18nextMiddleware from 'i18next-http-middleware'
 import session from 'express-session'
+import cors, { CorsOptions } from 'cors'
 import { passportConfig } from './api/v1/config'
 
 const app: Application = express()
+
+const { PORT, FRONTEND_URL } = process.env
+
+const whiteList = [FRONTEND_URL]
+
+const corsOptions: CorsOptions = {
+  credentials: true,
+  optionsSuccessStatus: 200,
+  origin: (origin, callback) => {
+    if (whiteList.indexOf(origin) !== -1 || !origin) {
+      // Allow preflight requests and requests from allowed origins
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+}
+
+app.use(cors(corsOptions))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -32,7 +52,5 @@ app.use(
 app.use(routes)
 app.use(notFound)
 app.use(errorHandler)
-
-const PORT = process.env.PORT
 
 app.listen(PORT, () => console.log(`App started on port ${PORT}`))
