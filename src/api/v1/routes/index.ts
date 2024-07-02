@@ -1,6 +1,10 @@
 import express from 'express'
 import { courseRoutes } from '../features/courses'
-import { authRoutes, authenticatedMiddleware } from '../features/users/auth'
+import {
+  authRoutes,
+  authenticatedMiddleware,
+  staffOnlyOrAboveRouteMiddleware,
+} from '../features/users/auth'
 import { classRoutes } from '../features/classes'
 import { topicRoutes } from '../features/classes/topics'
 import { materialRoutes } from '../features/classes/materials'
@@ -9,11 +13,18 @@ import { questionRoutes } from '../features/classes/exercises/questions'
 import { optionRoutes } from '../features/classes/exercises/options'
 import { attachmentRoutes } from '../features/classes/attachments'
 import { uploadRoutes } from '../features/uploads'
+import { coursePriceRoutes } from '../features/courses/prices'
 
 const router = express.Router()
 
 router.use('/api/v1/auth', authRoutes)
 router.use('/api/v1/courses', courseRoutes)
+router.use(
+  '/api/v1/prices',
+  authenticatedMiddleware,
+  staffOnlyOrAboveRouteMiddleware,
+  coursePriceRoutes
+)
 router.use('/api/v1/classes', authenticatedMiddleware, classRoutes)
 router.use('/api/v1/topics', authenticatedMiddleware, topicRoutes)
 router.use('/api/v1/materials', authenticatedMiddleware, materialRoutes)

@@ -29,7 +29,7 @@ export const createCoursePriceValidation = object({
  * Update course price
  */
 const updateCoursePriceSchema = createInsertSchema(coursePrices, {
-  courseId: z.string().optional(),
+  courseId: z.string().uuid().optional(),
   amount: z.number().optional(),
 })
 
@@ -39,7 +39,7 @@ const updateCoursePriceBody = {
 
 const updateCoursePriceParams = {
   params: object({
-    courseId: z.string().uuid(),
+    courseId: z.string().uuid().optional(),
     priceId: z.string().uuid(),
   }),
 }
