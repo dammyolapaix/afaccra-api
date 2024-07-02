@@ -8,7 +8,7 @@ export const courseLevelPriceTypeEnum = pgEnum('course_level_price', [
   'C1/C2',
 ])
 
-export const courseChildPriceTypeEnum = pgEnum('course_duration_period', [
+export const courseChildPriceTypeEnum = pgEnum('course_child_price', [
   '1st child',
   '2nd child',
   '3rd child',
