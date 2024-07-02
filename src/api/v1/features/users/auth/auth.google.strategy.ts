@@ -1,6 +1,6 @@
 import passportGoogle from 'passport-google-oauth20'
 const GoogleStrategy = passportGoogle.Strategy
-import { createUser, getSingleUserByEmail, updateUserById } from '../'
+import { UserType, createUser, getSingleUserByEmail, updateUserById } from '../'
 
 const googleCredentials = {
   clientID: process.env.GOOGLE_CLIENT_ID!,
@@ -23,7 +23,7 @@ export const googleStrategy = new GoogleStrategy(
           providerId: id,
         })
 
-        cb(null, user)
+        cb(null, user as UserType)
       }
 
       if (existingUser && existingUser.provider !== 'google') {
@@ -32,10 +32,10 @@ export const googleStrategy = new GoogleStrategy(
           providerId: id,
         })
 
-        cb(null, user)
+        cb(null, user as UserType)
       }
 
-      cb(null, existingUser)
+      cb(null, existingUser as UserType)
     } catch (error) {
       console.log(error)
       cb(error, undefined)
