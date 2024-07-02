@@ -8,7 +8,10 @@ import {
   updateCourseByIdHandler,
 } from '.'
 import { checkDuplicateCourseMiddleware } from '.'
-import { authenticatedMiddleware } from '../users/auth'
+import {
+  authenticatedMiddleware,
+  staffOnlyOrAboveRouteMiddleware,
+} from '../users/auth'
 import { validationMiddleware } from '../../middlewares'
 import { coursePriceRoutes } from './prices'
 import { courseScheduleRoutes } from './schedules'
@@ -27,6 +30,7 @@ router
   .get(getCoursesHandler)
   .post(
     authenticatedMiddleware,
+    staffOnlyOrAboveRouteMiddleware,
     validationMiddleware(createCourseValidation),
     checkDuplicateCourseMiddleware,
     createCourseHandler
@@ -37,6 +41,7 @@ router
   .get(getSingleCourseByQueryMiddleware, getSingleCourseByQueryHandler)
   .patch(
     authenticatedMiddleware,
+    staffOnlyOrAboveRouteMiddleware,
     getSingleCourseByQueryMiddleware,
     checkDuplicateCourseMiddleware,
     updateCourseByIdHandler
