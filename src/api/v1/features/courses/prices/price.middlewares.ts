@@ -6,6 +6,7 @@ import { ErrorResponse } from '../../../utils'
 export const coursePriceMiddleware = asyncHandler(
   async (req: CoursePriceRequestType, res: Response, next: NextFunction) => {
     req.body.courseId = req.course.id
+    req.body.amount = req.body.amount * 100
 
     if (req.method === 'PATCH') {
       const price = await getSingleCoursePriceById({ id: req.params.priceId! })
@@ -14,8 +15,6 @@ export const coursePriceMiddleware = asyncHandler(
         return next(
           new ErrorResponse(req.t('error.course.price.not_found'), 404)
         )
-
-      if (req.body.amount) req.body.amount = req.body.amount * 100
     }
 
     next()
