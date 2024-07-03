@@ -7,7 +7,7 @@ import {
   getSingleCourseByQueryMiddleware,
   updateCourseByIdHandler,
 } from '.'
-import { checkDuplicateCourseMiddleware } from '.'
+import { courseMiddleware } from '.'
 import {
   authenticatedMiddleware,
   staffOnlyOrAboveRouteMiddleware,
@@ -32,7 +32,7 @@ router
     authenticatedMiddleware,
     staffOnlyOrAboveRouteMiddleware,
     validationMiddleware(createCourseValidation),
-    checkDuplicateCourseMiddleware,
+    courseMiddleware,
     createCourseHandler
   )
 
@@ -43,7 +43,7 @@ router
     authenticatedMiddleware,
     staffOnlyOrAboveRouteMiddleware,
     getSingleCourseByQueryMiddleware,
-    checkDuplicateCourseMiddleware,
+    courseMiddleware,
     updateCourseByIdHandler
   )
 
