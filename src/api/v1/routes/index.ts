@@ -14,6 +14,7 @@ import { optionRoutes } from '../features/classes/exercises/options'
 import { attachmentRoutes } from '../features/classes/attachments'
 import { uploadRoutes } from '../features/uploads'
 import { coursePriceRoutes } from '../features/courses/prices'
+import { courseScheduleRoutes } from '../features/courses/schedules'
 
 const router = express.Router()
 
@@ -24,6 +25,12 @@ router.use(
   authenticatedMiddleware,
   staffOnlyOrAboveRouteMiddleware,
   coursePriceRoutes
+)
+router.use(
+  '/api/v1/schedules',
+  authenticatedMiddleware,
+  staffOnlyOrAboveRouteMiddleware,
+  courseScheduleRoutes
 )
 router.use('/api/v1/classes', authenticatedMiddleware, classRoutes)
 router.use('/api/v1/topics', authenticatedMiddleware, topicRoutes)
