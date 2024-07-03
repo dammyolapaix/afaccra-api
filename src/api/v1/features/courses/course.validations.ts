@@ -19,12 +19,13 @@ const createCourseSchema = createInsertSchema(courses, {
     .optional(),
   startTime: z
     .string()
-    .time({ message: 'error.course.startTime_invalid' })
+    // .time({ message: 'error.course.startTime_invalid' })
     .optional(),
   endTime: z
     .string()
-    .time({ message: 'error.course.endTime_invalid' })
+    // .time({ message: 'error.course.endTime_invalid' })
     .optional(),
+  durationValue: z.coerce.number().optional(),
 }).refine(
   ({ titleEn, titleFr }) => {
     if (!titleEn && !titleFr) return false
@@ -41,4 +42,16 @@ const createCourseBody = {
 
 export const createCourseValidation = object({
   ...createCourseBody,
+})
+
+export const getCourseQuerySchema = z.object({
+  isPublished: z.boolean().optional(),
+})
+
+const getCourseQueryBody = {
+  query: getCourseQuerySchema,
+}
+
+export const getCourseQueryValidation = object({
+  ...getCourseQueryBody,
 })

@@ -1,4 +1,7 @@
-import { createCourseValidation } from './course.validations'
+import {
+  createCourseValidation,
+  getCourseQueryValidation,
+} from './course.validations'
 import {
   courseMiddleware,
   getSingleCourseByQueryMiddleware,
@@ -24,7 +27,7 @@ import {
   SingleCourseByQueryRequestType,
 } from './course.types'
 
-export { createCourseValidation }
+export { createCourseValidation, getCourseQueryValidation }
 export { courseMiddleware, getSingleCourseByQueryMiddleware }
 export { CourseType, NewCourseType, SingleCourseByQueryRequestType }
 export {

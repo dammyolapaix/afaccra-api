@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { asyncHandler } from '../../middlewares'
 
 import {
+  CourseType,
   NewCourseType,
   SingleCourseByQueryRequestType,
   createCourse,
@@ -31,8 +32,12 @@ export const getSingleCourseByQueryHandler = asyncHandler(
 )
 
 export const getCoursesHandler = asyncHandler(
-  async (req: Request<{}, {}, {}, {}>, res: Response, next: NextFunction) => {
-    const courses = await getCourses()
+  async (
+    req: Request<{}, {}, {}, Partial<CourseType>>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const courses = await getCourses(req.query)
 
     res.status(200).json({ success: true, count: courses.length, courses })
   }

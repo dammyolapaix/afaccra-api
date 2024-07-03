@@ -2,6 +2,7 @@ import express from 'express'
 import {
   createCourseHandler,
   createCourseValidation,
+  getCourseQueryValidation,
   getCoursesHandler,
   getSingleCourseByQueryHandler,
   getSingleCourseByQueryMiddleware,
@@ -27,7 +28,7 @@ router.use('/:courseId/schedules', courseScheduleRoutes)
 
 router
   .route('/')
-  .get(getCoursesHandler)
+  .get(validationMiddleware(getCourseQueryValidation), getCoursesHandler)
   .post(
     authenticatedMiddleware,
     staffOnlyOrAboveRouteMiddleware,
