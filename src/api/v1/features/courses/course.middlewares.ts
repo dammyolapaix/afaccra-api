@@ -6,16 +6,19 @@ import {
   SingleCourseByQueryRequestType,
   getSingleCourseByQuery,
 } from '.'
-import { ErrorResponse } from '../../utils'
+import { ErrorResponse, checkRequiredFields } from '../../utils'
 import slugify from 'slugify'
+import { CoursePriceType } from './prices'
 
-export const checkDuplicateCourseMiddleware = asyncHandler(
+export const courseMiddleware = asyncHandler(
   async (
-    req: Request<{}, {}, NewCourseType, {}>,
+    req: Request<{}, {}, NewCourseType, {}> & {
+      course?: CourseType
+    },
     res: Response,
     next: NextFunction
   ) => {
-    const { titleEn, titleFr } = req.body
+    const { titleEn, titleFr, isPublished } = req.body
 
     if (titleEn) {
       req.body.slugEn = slugify(titleEn, { lower: true })
@@ -40,6 +43,37 @@ export const checkDuplicateCourseMiddleware = asyncHandler(
       if (courseExist)
         return next(
           new ErrorResponse(req.t('error.course.titleFr_exists'), 400)
+        )
+    }
+
+    // Publishing a course
+    if (req.method === 'POST' && isPublished)
+      return next(new ErrorResponse(`You can't publish this course yet`, 400))
+
+    if (req.method === 'PATCH' && isPublished) {
+      // Make sure these fields are required when publishing
+      const canPublishCourse = checkRequiredFields(
+        req.course! as CourseType & { prices: CoursePriceType[] },
+        [
+          'titleEn',
+          'titleFr',
+          'deliveryMode',
+          'startDate',
+          'endDate',
+          'durationPeriod',
+          'durationValue',
+          'audience',
+          'language',
+          'prices',
+        ]
+      )
+
+      if (!canPublishCourse)
+        return next(
+          new ErrorResponse(
+            `You can't publish this course yet, make sure you provide all information needed for this course`,
+            400
+          )
         )
     }
 
