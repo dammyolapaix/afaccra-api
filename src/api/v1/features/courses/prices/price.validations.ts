@@ -8,7 +8,17 @@ import coursePrices from './price.schema'
 const createCoursePriceSchema = createInsertSchema(coursePrices, {
   courseId: z.string().optional(),
   amount: z.number({ required_error: 'error.course.price.required' }),
-})
+  levelId: z.string().optional(),
+  child: z.string().optional(),
+}).refine(
+  ({ levelId, child }) => {
+    if ((!levelId && !child) || (levelId && child)) return false
+    return true
+  },
+  {
+    message: 'The levelId or the child is required. Only one of them',
+  }
+)
 
 const createCoursePriceBody = {
   body: createCoursePriceSchema,
