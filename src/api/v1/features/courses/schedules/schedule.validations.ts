@@ -7,7 +7,8 @@ import courseSchedules from './schedule.schema'
  */
 const createCourseScheduleSchema = createInsertSchema(courseSchedules, {
   courseId: z.string().optional(),
-  time: z.string(),
+  startTime: z.string(),
+  endTime: z.string(),
 })
 
 const createCourseScheduleBody = {
