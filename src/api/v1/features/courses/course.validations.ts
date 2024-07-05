@@ -17,15 +17,6 @@ const createCourseSchema = createInsertSchema(courses, {
       message: 'error.course.titleFr_3_min',
     })
     .optional(),
-  startTime: z
-    .string()
-    // .time({ message: 'error.course.startTime_invalid' })
-    .optional(),
-  endTime: z
-    .string()
-    // .time({ message: 'error.course.endTime_invalid' })
-    .optional(),
-  durationValue: z.coerce.number().optional(),
 }).refine(
   ({ titleEn, titleFr }) => {
     if (!titleEn && !titleFr) return false

@@ -54,18 +54,7 @@ export const courseMiddleware = asyncHandler(
       // Make sure these fields are required when publishing
       const canPublishCourse = checkRequiredFields(
         req.course! as CourseType & { prices: CoursePriceType[] },
-        [
-          'titleEn',
-          'titleFr',
-          'deliveryMode',
-          'startDate',
-          'endDate',
-          'durationPeriod',
-          'durationValue',
-          'audience',
-          'language',
-          'prices',
-        ]
+        ['titleEn', 'titleFr', 'deliveryMode', 'audience', 'language', 'prices']
       )
 
       if (!canPublishCourse)

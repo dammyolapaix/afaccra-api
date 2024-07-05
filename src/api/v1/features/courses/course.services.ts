@@ -38,7 +38,7 @@ export const getCourses = async ({ isPublished }: Partial<CourseType>) =>
       isPublished !== undefined
         ? eq(courses.isPublished, isPublished)
         : undefined,
-    orderBy: desc(courses.startDate),
+    orderBy: desc(courses.createdAt),
     with: {
       user: {
         columns: { password: false },
