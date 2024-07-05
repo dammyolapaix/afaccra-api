@@ -7,7 +7,8 @@ const courseSchedules = pgTable('course_schedules', {
   courseId: uuid('course_id')
     .references(() => courses.id)
     .notNull(),
-  time: time('time').notNull(),
+  startTime: time('start_time'),
+  endTime: time('end_time'),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow(),
 })

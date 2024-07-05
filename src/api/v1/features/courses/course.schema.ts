@@ -1,19 +1,17 @@
 import { relations } from 'drizzle-orm'
 import {
   boolean,
-  date,
-  integer,
   pgEnum,
   pgTable,
   text,
-  time,
   timestamp,
   uuid,
   varchar,
 } from 'drizzle-orm/pg-core'
-import courseSchedules from './schedules/schedule.schema'
+import schedules from './schedules/schedule.schema'
 import coursePrices from './prices/price.schema'
 import users from '../users/user.schema'
+import cohorts from './cohorts/cohort.schema'
 
 export const courseDeliveryModeEnum = pgEnum('course_delivery_mode', [
   'in-person',
@@ -51,17 +49,13 @@ const courses = pgTable('courses', {
   slugEn: varchar('slug_en', { length: 256 }).unique(),
   slugFr: varchar('slug_fr', { length: 256 }).unique(),
   deliveryMode: courseDeliveryModeEnum('delivery_mode'),
-  startDate: date('start_date'),
-  endDate: date('end_date'),
   days: text('days').array().$type<Array<Days>>(),
-  startTime: time('start_time'),
-  endTime: time('end_time'),
-  durationValue: integer('duration_value'),
-  durationPeriod: courseDurationPeriodEnum('duration_period'),
-  audience: courseAudienceEnum('audience'),
+  audience: courseAudienceEnum('audience').default('adults'),
   language: courseLanguageEnum('language'),
-  objective: text('objective'),
-  curriculum: text('curriculum'),
+  objectiveEn: text('objectiveEn'),
+  objectiveFr: text('objectiveFr'),
+  curriculumEn: text('curriculumEn'),
+  curriculumFr: text('curriculumFr'),
   userId: uuid('user_id')
     .references(() => users.id)
     .notNull(),
@@ -75,8 +69,9 @@ export const coursesRelations = relations(courses, ({ one, many }) => ({
     fields: [courses.userId],
     references: [users.id],
   }),
-  schedules: many(courseSchedules),
+  schedules: many(schedules),
   prices: many(coursePrices),
+  cohorts: many(cohorts),
 }))
 
 export default courses

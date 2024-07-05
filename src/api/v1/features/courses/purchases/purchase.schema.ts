@@ -1,8 +1,16 @@
-import { bigint, pgEnum, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
-import courses from '../course.schema'
+import {
+  bigint,
+  integer,
+  pgEnum,
+  pgTable,
+  timestamp,
+  uuid,
+} from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 import users from '../../users/user.schema'
 import coursePrices from '../prices/price.schema'
+import classes from '../../classes/class.schema'
+import cohorts from '../cohorts/cohort.schema'
 
 export const purchasePaymentStatusEnum = pgEnum('purchase_payment_status', [
   'pending',
@@ -12,14 +20,15 @@ export const purchasePaymentStatusEnum = pgEnum('purchase_payment_status', [
 
 const coursePurchases = pgTable('course_purchases', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
-  courseId: uuid('course_id')
-    .references(() => courses.id)
+  amount: integer('amount').notNull(),
+  classId: uuid('class_id')
+    .references(() => classes.id)
+    .notNull(),
+  cohortId: uuid('cohort_id')
+    .references(() => coursePrices.id)
     .notNull(),
   userId: uuid('user_id')
     .references(() => users.id)
-    .notNull(),
-  coursePriceId: uuid('course_price_id')
-    .references(() => coursePrices.id)
     .notNull(),
   paymentStatus: purchasePaymentStatusEnum('payment_status').default('pending'),
   paidAt: timestamp('paid_at', { mode: 'string' }),
@@ -31,17 +40,17 @@ const coursePurchases = pgTable('course_purchases', {
 export const coursePurchasesRelations = relations(
   coursePurchases,
   ({ one }) => ({
-    course: one(courses, {
-      fields: [coursePurchases.courseId],
-      references: [courses.id],
+    class: one(classes, {
+      fields: [coursePurchases.classId],
+      references: [classes.id],
+    }),
+    cohort: one(cohorts, {
+      fields: [coursePurchases.cohortId],
+      references: [cohorts.id],
     }),
     user: one(users, {
       fields: [coursePurchases.userId],
       references: [users.id],
-    }),
-    price: one(coursePrices, {
-      fields: [coursePurchases.coursePriceId],
-      references: [coursePrices.id],
     }),
   })
 )

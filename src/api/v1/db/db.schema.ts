@@ -15,6 +15,12 @@ export {
   usersToRolesRelations,
 } from '../features/users/roles/user.role.schema'
 
+export {
+  default as levels,
+  levelEnum,
+  levelsRelations,
+} from '../features/levels/level.schema'
+
 /**
  * Courses
  */
@@ -32,10 +38,13 @@ export {
 } from '../features/courses/schedules/schedule.schema'
 export {
   default as coursePrices,
-  courseChildPriceTypeEnum,
-  courseLevelPriceTypeEnum,
+  courseChildPriceEnum,
   coursePricesRelations,
 } from '../features/courses/prices/price.schema'
+export {
+  default as cohorts,
+  cohortsRelations,
+} from '../features/courses/cohorts/cohort.schema'
 export { default as books } from '../features/books/book.schema'
 export {
   default as coursePurchases,
