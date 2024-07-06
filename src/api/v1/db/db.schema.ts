@@ -51,10 +51,6 @@ export {
   coursePurchasesRelations,
   purchasePaymentStatusEnum,
 } from '../features/courses/purchases/purchase.schema'
-export {
-  default as courseEnrollments,
-  courseEnrollmentsRelations,
-} from '../features/courses/enrollments/enrollment.schema'
 
 /**
  * Classes
