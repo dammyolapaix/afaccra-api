@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { asyncHandler } from '../../middlewares'
 import { ClassType, NewClassType, getSingleClassById } from '.'
 import { ErrorResponse } from '../../utils'
-import { getSingleCourseByQuery } from '../courses'
+import { getSingleCoursePriceById } from '../courses/prices'
 
 export const createClassMiddleware = asyncHandler(
   async (
@@ -10,14 +10,14 @@ export const createClassMiddleware = asyncHandler(
     res: Response,
     next: NextFunction
   ) => {
-    const { courseId } = req.body
+    const { priceId } = req.body
 
     req.body.userId = req.user!.id
 
-    const course = await getSingleCourseByQuery({ id: courseId })
+    const price = await getSingleCoursePriceById({ id: priceId })
 
-    if (course === undefined)
-      return next(new ErrorResponse(req.t('error.course.not_found'), 404))
+    if (price === undefined)
+      return next(new ErrorResponse(req.t('error.course.price.not_found'), 404))
 
     next()
   }

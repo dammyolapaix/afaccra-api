@@ -17,8 +17,8 @@ const createClassSchema = createInsertSchema(classes, {
       message: 'error.class.nameFr_3_min',
     })
     .optional(),
-  courseId: z.string({
-    required_error: 'error.class.course.required',
+  priceId: z.string({
+    required_error: 'error.class.price.required',
   }),
 }).refine(
   ({ nameEn, nameFr }) => {

@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm'
 
 export const getClasses = async () =>
   await db.query.classes.findMany({
-    with: { course: true, user: { columns: { password: false } } },
+    with: { price: true, user: { columns: { password: false } } },
   })
 
 export const createClass = async (courseClass: NewClassType) => {
@@ -16,7 +16,7 @@ export const createClass = async (courseClass: NewClassType) => {
 export const getSingleClassById = async ({ id }: Pick<ClassType, 'id'>) =>
   await db.query.classes.findFirst({
     where: eq(classes.id, id),
-    with: { course: true, user: { columns: { password: false } } },
+    with: { price: true, user: { columns: { password: false } } },
   })
 
 export const updateClassById = async (
