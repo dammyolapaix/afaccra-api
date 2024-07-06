@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { CoursePurchaseType, NewCoursePurchaseType } from '.'
 import { db } from '../../../db'
 import coursePurchases from './purchase.schema'
@@ -17,11 +17,20 @@ export const getSingleCoursePurchaseById = async ({
 }: Pick<CoursePurchaseType, 'id'>) =>
   await db.query.coursePurchases.findFirst({
     where: eq(coursePurchases.id, id),
-    with: {
-      user: true,
-      course: true,
-      price: true,
-    },
+  })
+
+export const getUserPaidCoursePurchase = async ({
+  classId,
+  cohortId,
+  userId,
+}: Pick<CoursePurchaseType, 'classId' | 'cohortId' | 'userId'>) =>
+  await db.query.coursePurchases.findFirst({
+    where: and(
+      eq(coursePurchases.classId, classId),
+      eq(coursePurchases.cohortId, cohortId),
+      eq(coursePurchases.userId, userId),
+      eq(coursePurchases.paymentStatus, 'paid')
+    ),
   })
 
 export const updateCoursePurchaseById = async (

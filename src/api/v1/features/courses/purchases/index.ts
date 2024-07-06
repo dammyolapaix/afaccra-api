@@ -6,6 +6,7 @@ import {
   CoursePurchaseType,
   NewCoursePurchaseType,
   CoursePurchaseRequestType,
+  EnrollCourseRequestType,
 } from './purchase.types'
 import {
   purchaseCourseHandler,
@@ -15,11 +16,21 @@ import {
   purchaseCourse,
   getSingleCoursePurchaseById,
   updateCoursePurchaseById,
+  getUserPaidCoursePurchase,
 } from './purchase.services'
 import coursePurchaseRoutes from './purchase.routes'
 
 export { coursePurchaseMiddleware, singleCoursePurchaseMiddleware }
-export { CoursePurchaseType, NewCoursePurchaseType, CoursePurchaseRequestType }
+export {
+  CoursePurchaseType,
+  NewCoursePurchaseType,
+  CoursePurchaseRequestType,
+  EnrollCourseRequestType,
+}
 export { purchaseCourse, getSingleCoursePurchaseById, updateCoursePurchaseById }
-export { purchaseCourseHandler, verifyCoursePurchaseHandler }
+export {
+  purchaseCourseHandler,
+  verifyCoursePurchaseHandler,
+  getUserPaidCoursePurchase,
+}
 export { coursePurchaseRoutes }
