@@ -15,11 +15,13 @@ import { attachmentRoutes } from '../features/classes/attachments'
 import { uploadRoutes } from '../features/uploads'
 import { coursePriceRoutes } from '../features/courses/prices'
 import { courseScheduleRoutes } from '../features/courses/schedules'
+import { levelRoutes } from '../features/levels'
 
 const router = express.Router()
 
 router.use('/api/v1/auth', authRoutes)
 router.use('/api/v1/courses', courseRoutes)
+router.use('/api/v1/levels', authenticatedMiddleware, levelRoutes)
 router.use(
   '/api/v1/prices',
   authenticatedMiddleware,
