@@ -12,3 +12,12 @@ export type SingleCohortRequestType = Request<
 > & {
   cohort?: CohortType
 }
+
+export type CohortRequestType = Request<
+  { cohortId?: CohortType['id'] },
+  {},
+  NewCohortType,
+  {}
+> & {
+  cohort?: CohortType
+}
