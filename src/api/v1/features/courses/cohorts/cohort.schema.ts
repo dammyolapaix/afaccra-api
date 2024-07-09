@@ -8,7 +8,7 @@ const cohorts = pgTable('cohorts', {
   startDate: date('start_date'),
   endDate: date('end_date'),
   name: varchar('name', { length: 256 }),
-  duration: varchar('name', { length: 256 }),
+  duration: varchar('duration', { length: 256 }),
   courseId: uuid('course_id')
     .references(() => courses.id)
     .notNull(),
