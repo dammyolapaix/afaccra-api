@@ -27,8 +27,13 @@ export const getSingleCourseByQuery = async ({
       user: {
         columns: { password: false },
       },
-      prices: true,
+      prices: {
+        with: {
+          level: true,
+        },
+      },
       schedules: true,
+      cohorts: true,
     },
   })
 
@@ -43,8 +48,13 @@ export const getCourses = async ({ isPublished }: Partial<CourseType>) =>
       user: {
         columns: { password: false },
       },
-      prices: true,
+      prices: {
+        with: {
+          level: true,
+        },
+      },
       schedules: true,
+      cohorts: true,
     },
   })
 
