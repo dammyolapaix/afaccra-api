@@ -1,7 +1,13 @@
 import { eq } from 'drizzle-orm'
-import { CoursePriceType, NewCoursePriceType } from '.'
+import { CoursePriceQueryType, CoursePriceType, NewCoursePriceType } from '.'
 import { db } from '../../../db'
 import coursePrices from './price.schema'
+
+export const getCoursePrices = async ({ courseId }: CoursePriceQueryType) =>
+  await db.query.coursePrices.findMany({
+    where: courseId ? eq(coursePrices.courseId, courseId) : undefined,
+    with: { level: true },
+  })
 
 export const createCoursePrice = async (coursePrice: NewCoursePriceType) => {
   const newCoursePrice = await db

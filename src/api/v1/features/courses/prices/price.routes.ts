@@ -7,6 +7,8 @@ import {
   createCoursePriceValidation,
   updateCoursePriceHandler,
   updateCoursePriceValidation,
+  getCoursePricesHandler,
+  getCoursePriceQuerySchema,
 } from '.'
 import { validationMiddleware } from '../../../middlewares'
 
@@ -14,6 +16,7 @@ const router = express.Router({ mergeParams: true })
 
 router
   .route('/')
+  .get(validationMiddleware(getCoursePriceQuerySchema), getCoursePricesHandler)
   .post(
     authenticatedMiddleware,
     validationMiddleware(createCoursePriceValidation),

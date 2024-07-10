@@ -51,3 +51,17 @@ export const updateCoursePriceValidation = object({
   ...updateCoursePriceParams,
   ...updateCoursePriceBody,
 })
+
+/**
+ * Query
+ */
+
+export const getCoursePriceQuerySchema = z.object({
+  courseId: z.string().uuid().optional(),
+})
+const query = {
+  query: getCoursePriceQuerySchema,
+}
+export const getCoursePriceValidation = object({
+  ...query,
+})
