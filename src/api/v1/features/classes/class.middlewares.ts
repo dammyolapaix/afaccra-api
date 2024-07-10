@@ -19,6 +19,11 @@ export const createClassMiddleware = asyncHandler(
     if (price === undefined)
       return next(new ErrorResponse(req.t('error.course.price.not_found'), 404))
 
+    if ((req.body.displayOnWebsite as unknown as string) === 'true')
+      req.body.displayOnWebsite = true
+    if ((req.body.displayOnWebsite as unknown as string) === 'false')
+      req.body.displayOnWebsite = false
+
     next()
   }
 )
