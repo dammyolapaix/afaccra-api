@@ -7,7 +7,7 @@ export type NewCourseType = typeof courses.$inferInsert
 export type SingleCourseByQueryRequestType = Request<
   { identifier: string; courseId?: string },
   {},
-  {},
+  { courseId?: string },
   { identifier?: 'id' | 'slugEn' | 'slugFr' }
 > & {
   course: CourseType

@@ -78,9 +78,22 @@ export const getSingleCourseByQueryMiddleware = asyncHandler(
     res: Response,
     next: NextFunction
   ) => {
-    const { identifier, courseId } = req.params
+    const { identifier } = req.params
+
+    let courseId: string | undefined = undefined
+    if (req.params.courseId) courseId = req.params.courseId
+    if (req.body.courseId) courseId = req.body.courseId
 
     const query: Partial<Pick<CourseType, 'id' | 'slugEn' | 'slugFr'>> = {}
+
+    if (
+      identifier === undefined &&
+      courseId === undefined &&
+      Object.entries(query).length === 0
+    )
+      return next(
+        new ErrorResponse(req.t('error.course.courseId.required'), 404)
+      )
 
     switch (req.query.identifier) {
       case undefined:
