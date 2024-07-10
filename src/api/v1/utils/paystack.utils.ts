@@ -1,35 +1,10 @@
 import { makePaystackRequest } from '../config'
-
-type InitializePaystackTransactionType = {
-  email: string
-  amount: string
-  reference: string
-}
-
-type VerifyPaystackTransactionType = {
-  reference: string
-}
-
-type InitializePaystackTransactionSuccessResType = {
-  status: boolean
-  message: 'Authorization URL created'
-  data: {
-    authorization_url: string
-    access_code: string
-    reference: string
-  }
-}
-
-type VerifyPaystackTransactionSuccessResType = {
-  status: boolean
-  message: 'Verification successful'
-  data: {
-    id: number
-    status: 'success' | 'abandoned'
-    amount: number
-    paid_at: string | null
-  }
-}
+import {
+  InitializePaystackTransactionSuccessResType,
+  InitializePaystackTransactionType,
+  VerifyPaystackTransactionSuccessResType,
+  VerifyPaystackTransactionType,
+} from '../types'
 
 export const initializePaystackTransaction = async (
   transaction: InitializePaystackTransactionType
