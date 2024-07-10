@@ -6,7 +6,7 @@ import { UserRolesType } from './roles'
 
 export type UserType = Omit<typeof users.$inferSelect, 'password'> & {
   roles: UserRolesType[]
-  password?: string
+  password?: string | null
 }
 export type NewUserType = typeof users.$inferInsert
 export type RegisterUserType = z.infer<typeof insertUserSchema> & {

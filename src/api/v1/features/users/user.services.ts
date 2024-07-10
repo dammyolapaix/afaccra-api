@@ -17,12 +17,24 @@ export const getSingleUserById = async (id: string) =>
   })
 
 export const getSingleUserByEmail = async (email: string) =>
-  await db.query.users.findFirst({ where: eq(users.email, email) })
+  await db.query.users.findFirst({
+    where: eq(users.email, email),
+    with: {
+      roles: {
+        with: {
+          role: true,
+        },
+      },
+    },
+  })
 
 export const createUser = async (user: NewUserType) => {
-  const newUser = await db.insert(users).values(user).returning()
+  const newUser = await db
+    .insert(users)
+    .values(user)
+    .returning({ id: users.id })
 
-  return newUser[0]
+  return await getSingleUserById(newUser[0].id)
 }
 
 export const updateUserById = async (

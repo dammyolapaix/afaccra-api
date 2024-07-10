@@ -39,6 +39,10 @@ export const loginUserByEmailMiddleware = asyncHandler(
     const token = getSignedJwtToken(user.id)
 
     req.token = token
+    // Excluding the password
+    const { password: userPassword, ...restUser } = user
+
+    req.user = restUser
 
     next()
   }
@@ -67,6 +71,7 @@ const { COOKIE_EXPIRES, NODE_ENV } = process.env
 
 export const setCookieMiddleware = asyncHandler(
   async (req: AuthByEmailRequestType, res: Response, next: NextFunction) => {
+    const user = req.user
     const token = req.token
     const status = req.isRegister ? 201 : 200
 
@@ -83,6 +88,7 @@ export const setCookieMiddleware = asyncHandler(
       .json({
         success: true,
         token,
+        user,
       })
   }
 )

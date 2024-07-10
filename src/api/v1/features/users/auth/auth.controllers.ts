@@ -9,7 +9,8 @@ import { getSignedJwtToken } from '.'
 export const registerUserByEmailHandler = asyncHandler(
   async (req: AuthByEmailRequestType, res: Response, next: NextFunction) => {
     const user = await createUser(req.body)
-    req.token = getSignedJwtToken(user.id)
+    req.user = user
+    req.token = getSignedJwtToken(user!.id)
 
     next()
   }
