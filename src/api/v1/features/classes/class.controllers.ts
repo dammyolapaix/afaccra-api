@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import {
+  ClassQueryType,
   ClassType,
   NewClassType,
   SingleClassRequestType,
@@ -10,8 +11,12 @@ import {
 import { asyncHandler } from '../../middlewares'
 
 export const getClassesHandler = asyncHandler(
-  async (req: Request<{}, {}, {}, {}>, res: Response, next: NextFunction) => {
-    const classes = await getClasses()
+  async (
+    req: Request<{}, {}, {}, ClassQueryType>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const classes = await getClasses(req.query)
 
     res.status(200).json({ success: true, count: classes.length, classes })
   }

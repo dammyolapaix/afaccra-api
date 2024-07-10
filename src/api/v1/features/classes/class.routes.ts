@@ -4,6 +4,7 @@ import {
   createClassMiddleware,
   createClassValidation,
   getClassesHandler,
+  getClassValidation,
   getSingleClassByIdHandler,
   singleClassMiddleware,
   updateClassByIdHandler,
@@ -17,7 +18,7 @@ router.use('/:classId/topics', topicRoutes)
 
 router
   .route('/')
-  .get(getClassesHandler)
+  .get(validationMiddleware(getClassValidation), getClassesHandler)
   .post(
     validationMiddleware(createClassValidation),
     createClassMiddleware,

@@ -2,8 +2,17 @@ import {
   createClassMiddleware,
   singleClassMiddleware,
 } from './class.middlewares'
-import { createClassValidation } from './class.validations'
-import { ClassType, NewClassType, SingleClassRequestType } from './class.types'
+import {
+  createClassValidation,
+  getClassQuerySchema,
+  getClassValidation,
+} from './class.validations'
+import {
+  ClassType,
+  NewClassType,
+  SingleClassRequestType,
+  ClassQueryType,
+} from './class.types'
 import {
   createClass,
   getClasses,
@@ -19,8 +28,8 @@ import {
 import classRoutes from './class.routes'
 
 export { createClassMiddleware, singleClassMiddleware }
-export { createClassValidation }
-export { ClassType, NewClassType, SingleClassRequestType }
+export { createClassValidation, getClassQuerySchema, getClassValidation }
+export { ClassType, NewClassType, SingleClassRequestType, ClassQueryType }
 export { createClass, getClasses, getSingleClassById, updateClassById }
 export {
   createClassHandler,

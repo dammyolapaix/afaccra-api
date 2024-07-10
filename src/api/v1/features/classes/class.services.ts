@@ -1,12 +1,18 @@
 import { db } from '../../db'
-import { ClassType, NewClassType } from '.'
+import { ClassQueryType, ClassType, NewClassType } from '.'
 import classes from './class.schema'
-import { eq } from 'drizzle-orm'
+import { eq, getTableColumns } from 'drizzle-orm'
+import coursePrices from '../courses/prices/price.schema'
+import courses from '../courses/course.schema'
+import levels from '../levels/level.schema'
 
-export const getClasses = async () =>
-  await db.query.classes.findMany({
+export const getClasses = async (query: ClassQueryType) => {
+  if (query.courseId) return await getCourseClasses(query.courseId)
+
+  return await db.query.classes.findMany({
     with: { price: true, user: { columns: { password: false } } },
   })
+}
 
 export const createClass = async (courseClass: NewClassType) => {
   const newClass = await db.insert(classes).values(courseClass).returning()
@@ -31,3 +37,20 @@ export const updateClassById = async (
 
   return updatedClass[0]
 }
+
+export const getCourseClasses = async (courseId: string) =>
+  await db
+    .select({
+      ...getTableColumns(classes),
+      price: {
+        ...getTableColumns(coursePrices),
+      },
+      level: {
+        ...getTableColumns(levels),
+      },
+    })
+    .from(classes)
+    .leftJoin(coursePrices, eq(classes.priceId, coursePrices.id))
+    .leftJoin(courses, eq(courses.id, coursePrices.courseId))
+    .leftJoin(levels, eq(levels.id, coursePrices.levelId))
+    .where(eq(courses.id, courseId))

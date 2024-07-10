@@ -37,3 +37,17 @@ const createClassBody = {
 export const createClassValidation = object({
   ...createClassBody,
 })
+
+/**
+ * Query
+ */
+
+export const getClassQuerySchema = z.object({
+  courseId: z.string().uuid().optional(),
+})
+const query = {
+  query: getClassQuerySchema,
+}
+export const getClassValidation = object({
+  ...query,
+})
