@@ -6,7 +6,7 @@ import coursePrices from './price.schema'
  * Create course price
  */
 const createCoursePriceSchema = createInsertSchema(coursePrices, {
-  courseId: z.string().optional(),
+  courseId: z.string().uuid(),
   amount: z.number({ required_error: 'error.course.price.required' }),
   levelId: z.string().optional(),
   child: z.string().optional(),
@@ -24,14 +24,7 @@ const createCoursePriceBody = {
   body: createCoursePriceSchema,
 }
 
-const createCoursePriceParams = {
-  params: object({
-    courseId: z.string(),
-  }),
-}
-
 export const createCoursePriceValidation = object({
-  ...createCoursePriceParams,
   ...createCoursePriceBody,
 })
 
