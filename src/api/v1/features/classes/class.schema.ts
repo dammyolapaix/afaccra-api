@@ -1,12 +1,12 @@
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { boolean, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import users from '../users/user.schema'
 import { relations } from 'drizzle-orm'
 import coursePrices from '../courses/prices/price.schema'
 
 const classes = pgTable('classes', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
-  nameEn: varchar('name_en', { length: 256 }).unique(),
-  nameFr: varchar('name_fr', { length: 256 }).unique(),
+  name: varchar('name', { length: 256 }).notNull(),
+  displayOnWebsite: boolean('displayOnWebsite').notNull().default(false),
   priceId: uuid('price_id')
     .references(() => coursePrices.id)
     .notNull(),
