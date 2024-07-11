@@ -1,5 +1,12 @@
 import { relations } from 'drizzle-orm'
-import { date, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import {
+  boolean,
+  date,
+  pgTable,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core'
 import courses from '../course.schema'
 import coursePurchases from '../purchases/purchase.schema'
 
@@ -7,6 +14,7 @@ const cohorts = pgTable('cohorts', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
   startDate: date('start_date'),
   endDate: date('end_date'),
+  isActive: boolean('is_active').default(false),
   name: varchar('name', { length: 256 }),
   duration: varchar('duration', { length: 256 }),
   courseId: uuid('course_id')
