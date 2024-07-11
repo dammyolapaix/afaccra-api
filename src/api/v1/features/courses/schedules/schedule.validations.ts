@@ -6,7 +6,7 @@ import courseSchedules from './schedule.schema'
  * Create course schedule
  */
 const createCourseScheduleSchema = createInsertSchema(courseSchedules, {
-  courseId: z.string().optional(),
+  courseId: z.string().uuid(),
   startTime: z.string(),
   endTime: z.string(),
 })
@@ -15,14 +15,7 @@ const createCourseScheduleBody = {
   body: createCourseScheduleSchema,
 }
 
-const createCourseScheduleParams = {
-  params: object({
-    courseId: z.string(),
-  }),
-}
-
 export const createCourseScheduleValidation = object({
-  ...createCourseScheduleParams,
   ...createCourseScheduleBody,
 })
 
@@ -32,7 +25,6 @@ export const createCourseScheduleValidation = object({
 
 const updateCourseScheduleParams = {
   params: object({
-    courseId: z.string().uuid().optional(),
     scheduleId: z.string().uuid(),
   }),
 }
