@@ -8,24 +8,19 @@ import {
   getUserPaidCoursePurchase,
 } from '.'
 import { ErrorResponse, verifyPaystackTransaction } from '../../../utils'
-import { getSingleClassById } from '../../classes'
-import { getSingleCohortById } from '../cohorts'
 
 export const coursePurchaseMiddleware = asyncHandler(
   async (req: CoursePurchaseRequestType, res: Response, next: NextFunction) => {
     const { classId, cohortId } = req.body
     const userId = req.user!.id
 
-    const classExists = await getSingleClassById({ id: classId })
+    // Checking if class and cohort have the same course
+    const classAndCohortHaveSameCourse =
+      req.cohort.courseId === req.class.price.courseId
 
-    if (classExists === undefined)
-      return next(new ErrorResponse(req.t('error.course.class.not_found'), 404))
-
-    const cohort = await getSingleCohortById({ id: cohortId })
-
-    if (cohort === undefined)
+    if (!classAndCohortHaveSameCourse)
       return next(
-        new ErrorResponse(req.t('error.course.cohort.not_found'), 404)
+        new ErrorResponse(req.t("You can't purchase this course now"), 400)
       )
 
     const userHasPurchasedCourse = await getUserPaidCoursePurchase({
@@ -40,9 +35,10 @@ export const coursePurchaseMiddleware = asyncHandler(
       )
 
     req.body.userId = userId
+    req.body.amount = req.class.price.amount
 
     // For paystack transaction
-    req.amount = classExists.price.amount.toString()
+    req.amount = req.class.price.amount.toString()
     req.email = req.user!.email
 
     next()

@@ -8,7 +8,6 @@ import {
 } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 import users from '../../users/user.schema'
-import coursePrices from '../prices/price.schema'
 import classes from '../../classes/class.schema'
 import cohorts from '../cohorts/cohort.schema'
 
@@ -25,7 +24,7 @@ const coursePurchases = pgTable('course_purchases', {
     .references(() => classes.id)
     .notNull(),
   cohortId: uuid('cohort_id')
-    .references(() => coursePrices.id)
+    .references(() => cohorts.id)
     .notNull(),
   userId: uuid('user_id')
     .references(() => users.id)

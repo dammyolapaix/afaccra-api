@@ -16,12 +16,14 @@ import { uploadRoutes } from '../features/uploads'
 import { coursePriceRoutes } from '../features/courses/prices'
 import { courseScheduleRoutes } from '../features/courses/schedules'
 import { cohortRoutes } from '../features/courses/cohorts'
+import { coursePurchaseRoutes } from '../features/courses/purchases'
 import { levelRoutes } from '../features/levels'
 
 const router = express.Router()
 
 router.use('/api/v1/auth', authRoutes)
 router.use('/api/v1/courses', courseRoutes)
+router.use('/api/v1/classes', authenticatedMiddleware, classRoutes)
 router.use('/api/v1/levels', authenticatedMiddleware, levelRoutes)
 router.use(
   '/api/v1/prices',
@@ -41,6 +43,7 @@ router.use(
   staffOnlyOrAboveRouteMiddleware,
   cohortRoutes
 )
+router.use('/api/v1/purchases', authenticatedMiddleware, coursePurchaseRoutes)
 router.use('/api/v1/topics', authenticatedMiddleware, topicRoutes)
 router.use('/api/v1/materials', authenticatedMiddleware, materialRoutes)
 router.use('/api/v1/exercises', authenticatedMiddleware, exerciseRoutes)

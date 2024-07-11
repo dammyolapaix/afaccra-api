@@ -1,27 +1,45 @@
 import express from 'express'
-import { authenticatedMiddleware } from '../../users/auth'
 import { validationMiddleware } from '../../../middlewares'
 import {
   coursePurchaseMiddleware,
+  enrollCourseMiddleware,
+  singleCoursePurchaseMiddleware,
   purchaseCourseHandler,
   verifyCoursePurchaseHandler,
-  singleCoursePurchaseMiddleware,
+  enrollCourseHandler,
+  purchaseCourseValidation,
+  enrollCourseValidation,
 } from '.'
+import { singleClassMiddleware } from '../../classes'
+import { singleCohortMiddleware } from '../cohorts'
 
-const router = express.Router({ mergeParams: true })
+const router = express.Router()
 
-router.route('/').post(
-  authenticatedMiddleware,
-  // validationMiddleware(createCoursePriceValidation),
-  coursePurchaseMiddleware,
-  purchaseCourseHandler
-)
+router
+  .route('/')
+  .post(
+    validationMiddleware(purchaseCourseValidation),
+    singleClassMiddleware,
+    singleCohortMiddleware,
+    coursePurchaseMiddleware,
+    purchaseCourseHandler
+  )
 
-router.route('/:purchaseId/verify').get(
-  authenticatedMiddleware,
-  // validationMiddleware(updateCoursePriceValidation),
-  singleCoursePurchaseMiddleware,
-  verifyCoursePurchaseHandler
-)
+router
+  .route('/:purchaseId')
+  .patch(
+    validationMiddleware(enrollCourseValidation),
+    singleCoursePurchaseMiddleware,
+    enrollCourseMiddleware,
+    enrollCourseHandler
+  )
+
+router
+  .route('/:purchaseId/verify')
+  .get(
+    validationMiddleware(enrollCourseValidation),
+    singleCoursePurchaseMiddleware,
+    verifyCoursePurchaseHandler
+  )
 
 export default router

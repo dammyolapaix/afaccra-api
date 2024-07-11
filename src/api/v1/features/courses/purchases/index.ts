@@ -1,5 +1,10 @@
 import {
+  enrollCourseValidation,
+  purchaseCourseValidation,
+} from './purchase.validations'
+import {
   coursePurchaseMiddleware,
+  enrollCourseMiddleware,
   singleCoursePurchaseMiddleware,
 } from './purchase.middlewares'
 import {
@@ -9,6 +14,7 @@ import {
   EnrollCourseRequestType,
 } from './purchase.types'
 import {
+  enrollCourseHandler,
   purchaseCourseHandler,
   verifyCoursePurchaseHandler,
 } from './purchase.controllers'
@@ -20,7 +26,12 @@ import {
 } from './purchase.services'
 import coursePurchaseRoutes from './purchase.routes'
 
-export { coursePurchaseMiddleware, singleCoursePurchaseMiddleware }
+export { purchaseCourseValidation, enrollCourseValidation }
+export {
+  coursePurchaseMiddleware,
+  enrollCourseMiddleware,
+  singleCoursePurchaseMiddleware,
+}
 export {
   CoursePurchaseType,
   NewCoursePurchaseType,
@@ -32,5 +43,6 @@ export {
   purchaseCourseHandler,
   verifyCoursePurchaseHandler,
   getUserPaidCoursePurchase,
+  enrollCourseHandler,
 }
 export { coursePurchaseRoutes }
