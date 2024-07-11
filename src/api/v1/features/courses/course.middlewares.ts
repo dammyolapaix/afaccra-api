@@ -2,18 +2,18 @@ import { NextFunction, Request, Response } from 'express'
 import { asyncHandler } from '../../middlewares'
 import {
   CourseType,
+  CourseWithRelationshipsType,
   NewCourseType,
   SingleCourseByQueryRequestType,
   getSingleCourseByQuery,
 } from '.'
 import { ErrorResponse, checkRequiredFields } from '../../utils'
 import slugify from 'slugify'
-import { CoursePriceType } from './prices'
 
 export const courseMiddleware = asyncHandler(
   async (
     req: Request<{}, {}, NewCourseType, {}> & {
-      course?: CourseType
+      course?: CourseWithRelationshipsType
     },
     res: Response,
     next: NextFunction
@@ -52,15 +52,34 @@ export const courseMiddleware = asyncHandler(
 
     if (req.method === 'PATCH' && isPublished) {
       // Make sure these fields are required when publishing
-      const canPublishCourse = checkRequiredFields(
-        req.course! as CourseType & { prices: CoursePriceType[] },
-        ['titleEn', 'titleFr', 'deliveryMode', 'audience', 'language', 'prices']
+      const course = req.course!
+      const courseHasAllRequiredFields = checkRequiredFields(course, [
+        'titleEn',
+        'titleFr',
+        'deliveryMode',
+        'days',
+        'audience',
+        'language',
+        'objectiveEn',
+        'objectiveFr',
+        'curriculumEn',
+        'curriculumFr',
+        'prices',
+        'cohorts',
+        'schedules',
+      ])
+
+      const courseHasActiveCohort = course.cohorts.some(
+        ({ isActive }) => isActive
       )
+
+      const canPublishCourse =
+        courseHasAllRequiredFields && courseHasActiveCohort
 
       if (!canPublishCourse)
         return next(
           new ErrorResponse(
-            `You can't publish this course yet, make sure you provide all information needed for this course`,
+            `You can't publish this course yet, make sure you provide all information needed for this course and have a cohort under this course set as active`,
             400
           )
         )
