@@ -1,5 +1,6 @@
 import {
   createCourseValidation,
+  getCourseQuerySchema,
   getCourseQueryValidation,
 } from './course.validations'
 import {
@@ -25,11 +26,23 @@ import {
   CourseType,
   NewCourseType,
   SingleCourseByQueryRequestType,
+  CourseQueryType,
+  CourseWithRelationshipsType,
 } from './course.types'
 
-export { createCourseValidation, getCourseQueryValidation }
+export {
+  createCourseValidation,
+  getCourseQueryValidation,
+  getCourseQuerySchema,
+}
 export { courseMiddleware, getSingleCourseByQueryMiddleware }
-export { CourseType, NewCourseType, SingleCourseByQueryRequestType }
+export {
+  CourseType,
+  NewCourseType,
+  SingleCourseByQueryRequestType,
+  CourseQueryType,
+  CourseWithRelationshipsType,
+}
 export {
   createCourse,
   deleteCourseById,

@@ -1,7 +1,9 @@
 import { db } from '../../db'
-import { CourseType, NewCourseType } from '.'
+import { CourseQueryType, CourseType, NewCourseType } from '.'
 import courses from './course.schema'
 import { desc, eq, or } from 'drizzle-orm'
+import classes from '../classes/class.schema'
+import cohorts from './cohorts/cohort.schema'
 
 export const createCourse = async (course: NewCourseType) => {
   const newCourse = await db.insert(courses).values(course).returning()
@@ -37,7 +39,11 @@ export const getSingleCourseByQuery = async ({
     },
   })
 
-export const getCourses = async ({ isPublished }: Partial<CourseType>) =>
+export const getCourses = async ({
+  isPublished,
+  prices,
+  cohorts: qCohorts,
+}: Partial<CourseQueryType>) =>
   await db.query.courses.findMany({
     where:
       isPublished !== undefined
@@ -51,10 +57,19 @@ export const getCourses = async ({ isPublished }: Partial<CourseType>) =>
       prices: {
         with: {
           level: true,
+          classes: {
+            where: prices?.classes?.displayOnWebsite
+              ? eq(classes.displayOnWebsite, prices.classes.displayOnWebsite)
+              : undefined,
+          },
         },
       },
       schedules: true,
-      cohorts: true,
+      cohorts: {
+        where: qCohorts?.isActive
+          ? eq(cohorts.isActive, qCohorts.isActive)
+          : undefined,
+      },
     },
   })
 

@@ -33,7 +33,7 @@ export const coursePricesRelations = relations(
       fields: [coursePrices.levelId],
       references: [levels.id],
     }),
-    price: many(classes),
+    classes: many(classes),
   })
 )
 
