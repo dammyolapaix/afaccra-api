@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm install && tsc",
     "dev": "ts-node-dev --respawn ./src/app.ts",
-    "start": "node ./build/src/app.js",
+    "start": "ts-node ./src/app.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "migration": "drizzle-kit generate && drizzle-kit push",
