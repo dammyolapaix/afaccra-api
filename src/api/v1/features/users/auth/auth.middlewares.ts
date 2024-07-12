@@ -83,7 +83,11 @@ export const setCookieMiddleware = asyncHandler(
         ),
         httpOnly: true,
         secure: NODE_ENV === 'production',
-        sameSite: NODE_ENV === 'production' ? 'none' : undefined,
+        sameSite: NODE_ENV === 'production' ? 'lax' : undefined,
+        domain:
+          process.env.NODE_ENV === 'production'
+            ? process.env.COOKIE_DOMAIN
+            : 'localhost',
       })
       .json({
         success: true,
